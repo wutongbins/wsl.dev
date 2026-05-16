@@ -9,6 +9,7 @@ tags:
   - Git
   - github
 description: git
+slug: github-token-tutorial
 ---
 ###  个人访问令牌 (Token)登陆github的教程
 
