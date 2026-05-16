@@ -139,6 +139,27 @@ const structuredData = {
 
     <!-- Minimal inline script to prevent FOUC - sets theme immediately -->
     <script is:inline>
+      // 禁止右键菜单
+      document.oncontextmenu = () => false;
+      // 禁止鼠标选中文字
+      document.onselectstart = () => false;
+      // 禁止复制快捷键 (Command+C 或 Ctrl+C)
+      document.onkeydown = (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === "c") {
+          return false;
+        }
+      };
+
+      document.body.oncopy = (e) => {
+        e.preventDefault();
+        const textData = window.getSelection().toString();
+        const copyright = `\n\n---------------------\n著作权归作者wtb所有。\n商业转载请联系作者获得授权，非商业转载请注明出处。\n原文链接: ${window.location.href}`;
+
+        if (e.clipboardData) {
+          e.clipboardData.setData("text/plain", textData + copyright);
+        }
+      };
+
       (function () {
         const initialColorScheme = ""; // "light" | "dark"
         const currentTheme = localStorage.getItem("theme");
@@ -160,7 +181,7 @@ const structuredData = {
         window.theme = {
           themeValue: themeValue,
           getTheme: () => window.theme.themeValue,
-          setTheme: val => {
+          setTheme: (val) => {
             window.theme.themeValue = val;
           },
         };
