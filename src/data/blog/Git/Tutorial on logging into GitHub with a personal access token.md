@@ -59,5 +59,7 @@ Password for 'https://xxxx@github.com':
 Bash
 
 git config --global credential.helper trend
+
+
 注：在 macOS 系统上，它会自动关联你的 Keychain（钥匙串访问）。
 接下来：你只需要按照“第二部分”的步骤手动成功输入一次用户名和 Token，Mac 就会永久记住它。以后你再运行 git push，代码就会像丝般顺滑地直接飞上 GitHub，再也不会弹窗打扰你了！
