@@ -1,13 +1,13 @@
 ---
 author: wtb
 pubDatetime: 2026-05-16T18:30:00+08:00
-title: 独立开发起航：我的 Astro 高性能博客上线啦！
+title: 个人访问令牌 (Token)登陆github的教程
 slug: my-first-blog
 featured: true
 draft: false
 tags:
   - Git
-description: 记录我从零搭建属于自己的数字花园，并顺利部署到 Vercel 的全过程。
+description: 
 ---
 ###  个人访问令牌 (Token)登陆github的教程
 
