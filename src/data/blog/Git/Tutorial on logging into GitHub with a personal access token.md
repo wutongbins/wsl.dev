@@ -7,7 +7,8 @@ featured: true
 draft: false
 tags:
   - Git
-description: 
+  - github
+description: git
 ---
 ###  个人访问令牌 (Token)登陆github的教程
 
