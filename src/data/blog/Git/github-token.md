@@ -1,17 +1,19 @@
 ---
 author: wtb
 pubDatetime: 2026-05-16T18:30:00+08:00
-title: 个人访问令牌 (Token)登陆github的教程
-slug: 个人访问令牌 (Token)登陆github的教程
+title: 个人访问令牌登陆github的教程
+slug: 个人访问令牌登陆github的教程
 featured: true
 draft: false
 tags:
   - Git
   - github
-description: git
-slug: github-token-tutorial
+description: “”
+slug: “github-token-tutorial”
 
 ---
+
+
 ###  个人访问令牌 (Token)登陆github的教程
 
 为了让你以后或者其他小伙伴随时翻阅，这里为你整理一份标准、精美、永远不会迷路的 GitHub 个人访问令牌（Personal Access Token, 简称 PAT）生成与使用全能教程。
