@@ -1,11 +1,11 @@
 export const SITE = {
-  website: "https://astro-paper.pages.dev/", // replace this with your deployed domain
-  author: "Sat Naing",
-  profile: "https://satnaing.dev/",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "AstroPaper",
+  website: "https://wsl-dev-chi.vercel.app/", // replace this with your deployed domain
+  author: "wutongbin",
+  profile: "https://wsl-dev-chi.vercel.app/",
+  desc: "404 Not Found",
+  title: "wtb dev",
   ogImage: "astropaper-og.jpg",
-  lightAndDarkMode: true,
+  lightAndDarkMode: false,
   postPerIndex: 4,
   postPerPage: 4,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
