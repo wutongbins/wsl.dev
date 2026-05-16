@@ -1,5 +1,5 @@
 ---
-author: 少龙
+author: wtb
 pubDatetime: 2026-05-16T18:00:00+08:00
 title: 独立开发起航：我的 Astro 高性能博客上线啦！
 slug: my-first-blog
@@ -7,8 +7,6 @@ featured: true
 draft: false
 tags:
   - 随笔
-  - 前端
-  - Astro
 description: 记录我从零搭建属于自己的数字花园，并顺利部署到 Vercel 的全过程。
 ---
 
