@@ -1,16 +1,14 @@
 ---
 author: wtb
 pubDatetime: 2026-05-16T18:30:00+08:00
-title: 个人访问令牌登陆github的教程
-slug: 个人访问令牌登陆github的教程
+title: GitHub Token 登录配置教程
 featured: true
 draft: false
 tags:
   - Git
   - github
-description: “”
+description: “如何使用个人访问令牌登录 GitHub 终端”
 slug: “github-token-tutorial”
-
 ---
 
 
