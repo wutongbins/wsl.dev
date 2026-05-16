@@ -2,7 +2,7 @@
 author: wtb
 pubDatetime: 2026-05-16T18:30:00+08:00
 title: GitHub Token 登录配置教程
-slug: “github-token-tutorial”
+slug: github-token-tutorial
 featured: true
 draft: false
 tags:
