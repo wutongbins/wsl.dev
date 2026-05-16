@@ -6,7 +6,7 @@ slug: my-first-blog
 featured: true
 draft: false
 tags:
-  - 随笔
+  - Git
 description: 记录我从零搭建属于自己的数字花园，并顺利部署到 Vercel 的全过程。
 ---
 ###  个人访问令牌 (Token)登陆github的教程
