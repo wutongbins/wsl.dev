@@ -2,7 +2,7 @@
 author: wtb
 pubDatetime: 2026-05-16T18:30:00+08:00
 title: 个人访问令牌 (Token)登陆github的教程
-slug: my-first-blog
+slug: 个人访问令牌 (Token)登陆github的教程
 featured: true
 draft: false
 tags:
