@@ -1,5 +1,5 @@
 ---
-// src/components/Card.astro 的全宽美化版
+// 1. 保持你最原始的 Props 定义，一个字都没改
 interface Props {
   title: string;
   description: string;
@@ -10,29 +10,27 @@ interface Props {
 const { title, description, href, tag } = Astro.props;
 ---
 
-<a
-  href={href}
-  class="block p-6 rounded-2xl bg-gray-900 border border-gray-800 hover:border-indigo-500/50 hover:bg-gray-800/40 transition-all duration-300 group hover:-translate-y-0.5 shadow-xl w-full"
+<li
+  class="group list-none relative rounded-2xl border border-white/10 bg-slate-950/40 p-6 backdrop-blur-xl transition-all duration-300 hover:border-emerald-500/40 hover:bg-slate-900/40 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/5"
 >
-  <div
-    class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3"
-  >
-    <h3
-      class="text-xl font-bold text-gray-200 group-hover:text-indigo-400 transition-colors flex items-center gap-2"
-    >
-      {title}
-      <span
-        class="inline-block transform group-hover:translate-x-1 transition-transform duration-300"
-        >→</span
-      >
-    </h3>
+  <a href={href} class="block h-full no-underline">
     {
       tag && (
-        <span class="text-xs px-2.5 py-1 rounded-md bg-indigo-500/10 text-indigo-400 font-semibold self-start sm:self-auto">
-          {tag}
-        </span>
+        <div class="flex items-center gap-2 text-xs font-mono font-medium text-emerald-400 mb-3">
+          <span class="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />
+          blog → {tag}
+        </div>
       )
     }
-  </div>
-  <p class="text-sm text-gray-400 leading-relaxed max-w-3xl">{description}</p>
-</a>
+
+    <h3
+      class="text-lg font-bold text-slate-100 transition-colors duration-300 group-hover:text-white"
+    >
+      {title}
+    </h3>
+
+    <p class="text-sm text-slate-400 mt-3 leading-relaxed line-clamp-2">
+      {description}
+    </p>
+  </a>
+</li>

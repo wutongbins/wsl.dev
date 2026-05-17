@@ -4,7 +4,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Card from "../components/Card.astro";
 import { getCollection } from "astro:content";
 
-// 1. 捞出所有文章并按时间排序
+// 1. 捞出所有文章并按时间排序（保持你原本的精妙逻辑）
 const allPosts = await getCollection("blog");
 const sortedPosts = allPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -14,12 +14,22 @@ const sortedPosts = allPosts.sort(
 const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
 ---
 
-<BaseLayout title="Blog">
+<BaseLayout title="blog">
   <div
     class="flex flex-col md:flex-row gap-8 min-h-[70vh] relative items-start"
   >
+    <div
+      class="absolute top-[15%] left-[10%] w-96 h-96 bg-emerald-500/5 rounded-full blur-[130px] pointer-events-none -z-10"
+    >
+    </div>
+
+    <div
+      class="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-[150px] pointer-events-none -z-10"
+    >
+    </div>
+
     <aside
-      class="w-full md:w-64 shrink-0 bg-gray-900/40 border border-gray-800 p-4 rounded-2xl md:sticky md:top-24"
+      class="w-full md:w-64 shrink-0 bg-slate-900/40 border border-white/5 p-4 rounded-2xl backdrop-blur-xl md:sticky md:top-24 z-10"
     >
       <h2
         class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4 px-2"
@@ -35,15 +45,15 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
             return (
               <a
                 href={`#category-${tag}`}
-                class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/5 transition-all group"
+                class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/5 transition-all group"
               >
                 <span class="flex items-center gap-2">
-                  <span class="text-gray-600 group-hover:text-indigo-500 font-bold">
+                  <span class="text-gray-600 group-hover:text-emerald-400 font-bold transition-colors">
                     #
                   </span>
                   {tag}
                 </span>
-                <span class="text-xs bg-gray-900 text-gray-500 px-2 py-0.5 rounded-md border border-gray-800 group-hover:border-indigo-500/20 group-hover:text-indigo-400">
+                <span class="text-xs bg-slate-950/60 text-gray-500 px-2 py-0.5 rounded-md border border-slate-900 group-hover:border-emerald-500/20 group-hover:text-emerald-400 transition-all">
                   {count}
                 </span>
               </a>
@@ -53,7 +63,7 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
       </nav>
     </aside>
 
-    <div class="flex-grow w-full space-y-14">
+    <div class="flex-grow w-full space-y-14 z-10">
       {
         allTags.map((tag) => {
           const currentTagPosts = sortedPosts.filter((post) =>
@@ -63,10 +73,10 @@ const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
           return (
             <section id={`category-${tag}`} class="scroll-mt-24">
               <div class="flex items-center gap-3 mb-6">
-                <div class="w-1.5 h-6 bg-gradient-to-b from-indigo-500 to-cyan-500 rounded-full" />
+                <div class="w-1.5 h-6 bg-gradient-to-b from-emerald-400 to-cyan-500 rounded-full" />
                 <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
                   {tag}
-                  <span class="text-xs font-normal text-gray-500 bg-gray-900 px-2 py-1 border border-gray-800 rounded-md">
+                  <span class="text-xs font-normal text-gray-500 bg-slate-900/60 px-2 py-1 border border-slate-800 rounded-md backdrop-blur-md">
                     {currentTagPosts.length} 篇
                   </span>
                 </h2>
