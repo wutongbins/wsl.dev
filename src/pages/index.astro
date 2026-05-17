@@ -1,116 +1,97 @@
 ---
+// src/pages/index.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
 import { getCollection } from "astro:content";
-import Layout from "@/layouts/Layout.astro";
-import Header from "@/components/Header.astro";
-import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
-import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
 
-const posts = await getCollection("blog");
+// 1. 捞出所有文章并按时间排序
+const allPosts = await getCollection("blog");
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
 
-const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+// 2. 自动提取所有不重复的标签（分类）
+const allTags = [...new Set(allPosts.flatMap((post) => post.data.tags))];
 ---
 
-<Layout>
-  <Header />
-  <main id="main-content" data-layout="index" class="app-layout">
-    <section id="hero" class:list={["pt-8 pb-6", "border-b border-border"]}>
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        wutongbins
-      </h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="inline-block"
-        aria-label="rss feed"
-        title="RSS Feed"
+<BaseLayout title="知识库工作台">
+  <div
+    class="flex flex-col md:flex-row gap-8 min-h-[70vh] relative items-start"
+  >
+    <aside
+      class="w-full md:w-64 shrink-0 bg-gray-900/40 border border-gray-800 p-4 rounded-2xl md:sticky md:top-24"
+    >
+      <h2
+        class="text-xs font-semibold uppercase tracking-wider text-gray-500 mb-4 px-2"
       >
-        <IconRss
-          width={20}
-          height={20}
-          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-        />
-        <!-- <span class="sr-only">RSS Feed</span> -->
-      </a>
+        知识库大纲
+      </h2>
+      <nav class="space-y-1">
+        {
+          allTags.map((tag) => {
+            const count = allPosts.filter((post) =>
+              post.data.tags.includes(tag),
+            ).length;
+            return (
+              <a
+                href={`#category-${tag}`}
+                class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-gray-400 hover:text-indigo-400 hover:bg-indigo-500/5 transition-all group"
+              >
+                <span class="flex items-center gap-2">
+                  <span class="text-gray-600 group-hover:text-indigo-500 font-bold">
+                    #
+                  </span>
+                  {tag}
+                </span>
+                <span class="text-xs bg-gray-900 text-gray-500 px-2 py-0.5 rounded-md border border-gray-800 group-hover:border-indigo-500/20 group-hover:text-indigo-400">
+                  {count}
+                </span>
+              </a>
+            );
+          })
+        }
+      </nav>
+    </aside>
 
-      <p>Welcome to wtb blog</p>
-      <!-- <p class="mt-2">
-        Read the blog posts or check
-        <LinkButton
-          class="underline decoration-dashed underline-offset-4 hover:text-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
-      </p> -->
+    <div class="flex-grow w-full space-y-14">
       {
-        // only display if at least one social link is enabled
-        SOCIALS.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
-            <Socials />
-          </div>
-        )
+        allTags.map((tag) => {
+          const currentTagPosts = sortedPosts.filter((post) =>
+            post.data.tags.includes(tag),
+          );
+
+          return (
+            <section id={`category-${tag}`} class="scroll-mt-24">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="w-1.5 h-6 bg-gradient-to-b from-indigo-500 to-cyan-500 rounded-full" />
+                <h2 class="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                  {tag}
+                  <span class="text-xs font-normal text-gray-500 bg-gray-900 px-2 py-1 border border-gray-800 rounded-md">
+                    {currentTagPosts.length} 篇
+                  </span>
+                </h2>
+              </div>
+
+              <div class="w-full space-y-4">
+                {currentTagPosts.map((post) => (
+                  <Card
+                    title={post.data.title}
+                    description={post.data.description}
+                    href={`/posts/${post.id}`}
+                    tag={post.data.tags[0]}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })
       }
-    </section>
-
-    {
-      featuredPosts.length > 0 && (
-        <section
-          id="featured"
-          class:list={[
-            "pt-12 pb-6",
-            { "border-b border-border": recentPosts.length > 0 },
-          ]}
-        >
-          <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
-          <ul>
-            {featuredPosts.map((data) => (
-              <Card variant="h3" {...data} />
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
-          <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />,
-            )}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href="/posts/">
-        All Posts
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
     </div>
-  </main>
-  <Footer />
-</Layout>
+  </div>
+</BaseLayout>
 
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
-  });
-</script>
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+  }
+</style>

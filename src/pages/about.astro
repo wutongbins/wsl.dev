@@ -1,0 +1,122 @@
+---
+// src/pages/about.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// 🚀 Astro v5/v6 标准：使用 Vite 原生的 import.meta.glob 代替已经废弃的 Astro.glob
+// eager: true 表示立即同步加载，不需要去处理繁琐的 Promise
+const markdownFiles = import.meta.glob("./about.md", { eager: true });
+
+// 拿到抓取到的第一个 Markdown 模块对象
+const aboutMdModule = Object.values(markdownFiles)[0] as any;
+
+if (!aboutMdModule) {
+  throw new Error(
+    "❌ 未能在 src/pages/ 目录下找到 about.md 文件，请确认路径为 src/pages/about.md",
+  );
+}
+
+// 解构出 md 顶部写的 Frontmatter 核心数据
+const { title, description } = aboutMdModule.frontmatter;
+
+// 直接提取出已被 Astro 编译好的原生 Content 渲染组件
+const Content = aboutMdModule.Content;
+---
+
+<BaseLayout title={title}>
+  <article class="max-w-3xl mx-auto py-10 px-4">
+    <header class="mb-10 pb-6 border-b border-gray-800 relative">
+      <div
+        class="absolute -left-4 top-0 w-1 h-12 bg-gradient-to-b from-indigo-500 to-cyan-500 rounded-full"
+      >
+      </div>
+      <h1
+        class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-3"
+      >
+        {title}
+      </h1>
+      <p class="text-base text-gray-400 max-w-2xl leading-relaxed">
+        {description}
+      </p>
+    </header>
+
+    <div class="markdown-resume w-full">
+      <Content />
+    </div>
+
+    <div class="mt-16 pt-8 border-t border-gray-900 text-center">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm text-indigo-400 hover:text-indigo-300 transition-all hover:-translate-x-0.5"
+      >
+        ← 返回知识库工作台
+      </a>
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  /* 📄 完美修复版 CSS 样式定义（保持高质感暗黑风） */
+  .markdown-resume {
+    color: #9ca3af;
+    font-size: 1.05rem;
+    line-height: 1.8;
+  }
+
+  .markdown-resume h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid #1f2937;
+    padding-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .markdown-resume h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f3f4f6;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .markdown-resume p {
+    margin-bottom: 1.2rem;
+  }
+
+  .markdown-resume hr {
+    border: 0;
+    border-top: 1px dashed #374151;
+    margin: 2rem 0;
+  }
+
+  /* 优雅的列表样式 */
+  .markdown-resume ul {
+    list-style-type: none !important;
+    padding-left: 0 !important;
+    margin-bottom: 1.5rem;
+  }
+
+  .markdown-resume li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .markdown-resume li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #6366f1;
+    font-weight: bold;
+    font-size: 1.2rem;
+    top: -0.1rem;
+  }
+
+  .markdown-resume strong {
+    color: #ffffff;
+    font-weight: 600;
+  }
+</style>

@@ -1,0 +1,98 @@
+---
+// src/layouts/BaseLayout.astro
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<html lang="zh">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | wutongbins</title>
+  </head>
+  <body
+    class="bg-gray-950 text-gray-100 min-h-screen flex flex-col justify-between"
+  >
+    <nav
+      class="border-b border-gray-800 bg-gray-900/50 backdrop-blur sticky top-0 z-50"
+    >
+      <div
+        class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between"
+      >
+        <a
+          href="/"
+          class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent"
+          >WuTongBin.DEV</a
+        >
+        <div class="flex gap-6 text-sm font-medium text-gray-400">
+          <a href="/" class="hover:text-white transition-colors">首页</a>
+          <a href="/about" class="hover:text-white transition-colors">关于</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-10 flex-grow w-full">
+      <slot />
+    </main>
+    <footer
+      class="w-full border-t border-gray-900 bg-gray-950/40 py-10 mt-auto"
+    >
+      <div
+        class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-6 text-sm"
+      >
+        <div class="text-gray-500 text-center md:text-left">
+          <p class="font-medium text-gray-400">
+            © {currentYear} wutongbins. All rights reserved.
+          </p>
+          <p class="text-xs mt-1 text-gray-600">
+            本站内容受现代 Web 工程化标准与知识共享协议保护。
+          </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-2">
+          <span
+            class="inline-flex items-center text-xs bg-gray-950/80 text-gray-400 px-2.5 py-1 rounded-md border border-gray-800/80"
+          >
+            Engine: <strong class="text-white ml-1 font-semibold"
+              >Astro v6</strong
+            >
+          </span>
+          <span
+            class="inline-flex items-center text-xs bg-gray-950/80 text-gray-400 px-2.5 py-1 rounded-md border border-gray-800/80"
+          >
+            CSS: <strong class="text-cyan-400 ml-1 font-semibold"
+              >Tailwind v4</strong
+            >
+          </span>
+          <span
+            class="inline-flex items-center text-xs bg-gray-950/80 text-gray-400 px-2.5 py-1 rounded-md border border-gray-800/80"
+          >
+            CDN: <strong class="text-orange-400 ml-1 font-semibold"
+              >Vercel Edge</strong
+            >
+          </span>
+        </div>
+
+        <div class="flex gap-4 text-gray-500 text-xs">
+          <a href="/about" class="hover:text-indigo-400 transition-colors"
+            >Resume</a
+          >
+          <span class="text-gray-800">|</span>
+          <a
+            href="#"
+            class="hover:text-white transition-colors flex items-center gap-0.5"
+          >
+            Back to top ↑
+          </a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
